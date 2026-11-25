@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trial of Wits #1 | The Set-Up</title>
+<style>
+:root{--ink:#242019;--paper:#f4ecd9;--paper2:#fffaf0;--red:#8b302b;--gold:#bd9147;--green:#315b48;--muted:#756d5e}
+*{box-sizing:border-box}
+body{margin:0;background:#171916;color:var(--ink);font-family:Georgia,'Times New Roman',serif;min-height:100vh;padding:28px 16px}
+.page{max-width:960px;margin:auto;background:var(--paper);border:1px solid #c5b58f;box-shadow:0 18px 60px #0008}
+.top{background:#242a25;color:var(--paper);padding:28px 34px;border-bottom:5px solid var(--gold)}
+.kicker{font:700 11px/1.4 Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#d7b66d}
+h1{font-size:clamp(30px,5vw,48px);margin:8px 0 4px;font-weight:normal}
+.subtitle{color:#e5d8bc;font-style:italic;font-size:17px}
+.progress{height:7px;background:#d5c8aa;margin-top:22px;border-radius:9px;overflow:hidden}
+.progress span{display:block;width:0;height:100%;background:var(--gold);transition:width .35s}
+main{padding:30px 34px 38px}
+.intro{font-size:18px;line-height:1.65;max-width:780px}
+.stamp{display:inline-block;border:1px solid var(--red);color:var(--red);padding:6px 10px;text-transform:uppercase;letter-spacing:1.5px;font:700 10px Arial,sans-serif;transform:rotate(-2deg);margin-bottom:10px}
+h2{font-size:27px;font-weight:normal;margin:25px 0 8px}
+.instruction{color:var(--muted);line-height:1.5;margin:0 0 18px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--paper2);border:1px solid #cbbd9e;padding:17px 18px;min-height:155px;display:flex;flex-direction:column;justify-content:space-between}
+.card p{font-size:17px;line-height:1.45;margin:0 0 14px}
+.card small{font:700 10px Arial,sans-serif;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.choices{display:flex;gap:8px;flex-wrap:wrap}
+button{font:700 12px Arial,sans-serif;letter-spacing:.6px;border:1px solid #8c8068;background:#f3ead6;color:var(--ink);padding:10px 12px;cursor:pointer;transition:.15s}
+button:hover{background:#e6d6b5}
+button.selected{background:#2d4638;color:white;border-color:#2d4638}
+button:disabled{opacity:.7;cursor:default}
+.card.correct{border:2px solid var(--green)}
+.card.incorrect{border:2px solid var(--red)}
+.feedback{font:13px Arial,sans-serif;line-height:1.5;margin-top:9px;min-height:18px}
+.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.primary{background:var(--red);color:white;border-color:var(--red);padding:13px 19px}
+.primary:hover{background:#6d2521}
+#status{font:13px Arial,sans-serif;color:var(--muted)}
+.lock{margin-top:30px;padding:22px;background:#e8dec7;border:1px solid #c5b58f;display:none}
+.lock h2{margin:0 0 8px}
+.lock p{line-height:1.55}
+.code-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+input{font:700 14px Arial,sans-serif;letter-spacing:1.5px;padding:13px;border:1px solid #98896b;background:#fffaf0;min-width:250px;max-width:100%;text-transform:uppercase}
+.success{display:none;margin-top:22px;padding:23px;border:2px solid var(--green);background:#e5ebdf}
+.success h2{color:var(--green);margin-top:0}
+.success .unlock{font:700 18px Arial,sans-serif;letter-spacing:2px;color:var(--green);overflow-wrap:anywhere}
+.note{font-size:13px;color:var(--muted);line-height:1.5;margin-top:25px;border-top:1px solid #cbbd9e;padding-top:15px}
+footer{background:#242a25;color:#d8ccb2;padding:14px 34px;font:11px Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:650px){main{padding:23px 18px 30px}.top{padding:24px 20px}.cards{grid-template-columns:1fr}.card{min-height:unset}footer{padding:14px 20px}}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="top">
+  <div class="kicker">The Polly Baker Conspiracy · Checkpoint 3A</div>
+  <h1>The Set-Up</h1>
+  <div class="subtitle">Trial of Wits #1: Baiting the Mark</div>
+  <div class="progress"><span id="progressBar"></span></div>
+</header>
+<main>
+  <div class="stamp">Confidential court exercise</div>
+  <p class="intro">Polly Baker is on trial for having children outside marriage. Instead of accepting the court's judgment, she turns the judges' own moral framework against them. Her argument begins with a question: if God commands people to <em>increase and multiply</em>, why is she being punished for having children?</p>
+
+  <h2>Exhibit A: Separate the two authorities</h2>
+  <p class="instruction">The court's case mixes religious language with colonial law and social expectations. Read each statement and decide where it belongs. Select one label for every card.</p>
+
+  <div class="cards" id="cards">
+    <article class="card" data-answer="bible">
+      <div><small>Statement 01</small><p>“Be fruitful, and multiply, and replenish the earth.”</p></div>
+      <div class="choices"><button type="button" data-choice="bible">Biblical command</button><button type="button" data-choice="court">Colonial court / law</button></div>
+      <div class="feedback" aria-live="polite"></div>
+    </article>
+    <article class="card" data-answer="court">
+      <div><small>Statement 02</small><p>Polly is brought before the court and punished for having children outside marriage.</p></div>
+      <div class="choices"><button type="button" data-choice="bible">Biblical command</button><button type="button" data-choice="court">Colonial court / law</button></div>
+      <div class="feedback" aria-live="polite"></div>
+    </article>
+    <article class="card" data-answer="bible">
+      <div><small>Statement 03</small><p>Polly invokes God's instruction to “increase and multiply” as support for her actions.</p></div>
+      <div class="choices"><button type="button" data-choice="bible">Biblical command</button><button type="button" data-choice="court">Colonial court / law</button></div>
+      <div class="feedback" aria-live="polite"></div>
+    </article>
+    <article class="card" data-answer="court">
+      <div><small>Statement 04</small><p>The court's social and legal standards place the public blame on Polly, while the man who fathered the children avoids comparable punishment.</p></div>
+      <div class="choices"><button type="button" data-choice="bible">Biblical command</button><button type="button" data-choice="court">Colonial court / law</button></div>
+      <div class="feedback" aria-live="polite"></div>
+    </article>
+  </div>
+  <div class="actions">
+    <button class="primary" id="checkBtn" type="button">Submit classifications</button>
+    <span id="status" aria-live="polite">0 of 4 statements classified.</span>
+  </div>
+
+  <section class="lock" id="lock">
+    <div class="stamp">First test passed</div>
+    <h2>Exhibit B: Find Polly's argument</h2>
+    <p>Polly's strategy is to make the court confront a contradiction: she is condemned for doing something that she argues fulfills a divine command. What two-word biblical phrase does she use as the center of this argument?</p>
+    <p class="instruction">Enter the phrase as one code. Use an underscore between the words.</p>
+    <div class="code-row">
+      <input id="codeInput" type="text" placeholder="ENTER THE PHRASE" autocomplete="off" aria-label="Checkpoint code">
+      <button class="primary" id="unlockBtn" type="button">Unlock 3B</button>
+    </div>
+    <div class="feedback" id="codeFeedback" aria-live="polite"></div>
+  </section>
+
+  <section class="success" id="success">
+    <div class="stamp">Checkpoint 3A complete</div>
+    <h2>The judges have been baited.</h2>
+    <p>You identified the difference between the biblical command and the colonial court's punishment, then uncovered Polly's central argument.</p>
+    <p>Your passcode for <strong>Checkpoint 3B</strong> is:</p>
+    <div class="unlock">INCREASE_AND_MULTIPLY</div>
+    <p class="instruction">Carry this code to the next checkpoint's riddle lock.</p>
+  </section>
+
+  <p class="note"><strong>Historical note:</strong> The biblical wording comes from Genesis 1:28 (King James Version). The court statements summarize the unequal treatment Polly challenges in Benjamin Franklin's 1747 speech; they are not presented as a quotation from a specific colonial statute.</p>
+</main>
+<footer><span>American Confidence Quest</span><span>Checkpoint 3A · Ethan Kushnir</span></footer>
+</div>
+<script>
+const cards=[...document.querySelectorAll('.card')];
+let selections={};
+const status=document.getElementById('status');
+function updateProgress(){
+  const count=Object.keys(selections).length;
+  status.textContent=`${count} of 4 statements classified.`;
+  document.getElementById('progressBar').style.width=(count/4*100)+'%';
+}
+cards.forEach((card,index)=>{
+  card.querySelectorAll('button').forEach(button=>{
+    button.addEventListener('click',()=>{
+      if(document.getElementById('lock').style.display==='block') return;
+      selections[index]=button.dataset.choice;
+      card.querySelectorAll('button').forEach(b=>b.classList.toggle('selected',b===button));
+      card.classList.remove('correct','incorrect');
+      card.querySelector('.feedback').textContent='';
+      updateProgress();
+    });
+  });
+});
+document.getElementById('checkBtn').addEventListener('click',()=>{
+  if(Object.keys(selections).length!==4){
+    status.textContent='Classify all four statements before submitting.';
+    return;
+  }
+  let correct=0;
+  cards.forEach((card,index)=>{
+    const isCorrect=selections[index]===card.dataset.answer;
+    card.classList.toggle('correct',isCorrect);
+    card.classList.toggle('incorrect',!isCorrect);
+    card.querySelector('.feedback').textContent=isCorrect?'Correct classification.':'Not quite. Re-read the statement and try again.';
+    if(isCorrect) correct++;
+  });
+  if(correct===4){
+    document.getElementById('lock').style.display='block';
+    document.getElementById('checkBtn').disabled=true;
+    status.textContent='4 of 4 correct. The second exhibit is unlocked.';
+    document.getElementById('lock').scrollIntoView({behavior:'smooth',block:'center'});
+  }else{
+    status.textContent=`${correct} of 4 correct. Correct the marked statements and submit again.`;
+  }
+});
+function checkCode(){
+  const value=document.getElementById('codeInput').value.trim().toUpperCase().replace(/\s+/g,'_');
+  const feedback=document.getElementById('codeFeedback');
+  if(value==='INCREASE_AND_MULTIPLY'){
+    feedback.textContent='Code accepted.';
+    feedback.style.color='var(--green)';
+    document.getElementById('success').style.display='block';
+    document.getElementById('unlockBtn').disabled=true;
+    document.getElementById('codeInput').disabled=true;
+    document.getElementById('success').scrollIntoView({behavior:'smooth',block:'center'});
+    document.getElementById('progressBar').style.width='100%';
+  }else{
+    feedback.textContent='That is not the phrase Polly uses. Try again.';
+    feedback.style.color='var(--red)';
+  }
+}
+document.getElementById('unlockBtn').addEventListener('click',checkCode);
+document.getElementById('codeInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkCode();});
+</script>
+</body>
+</html>
